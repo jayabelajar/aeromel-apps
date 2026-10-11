@@ -12,7 +12,7 @@ class DeviceManagementScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Device Management')),
+      appBar: AppBar(title: const Text('Perangkat')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: demoGreenhouses
@@ -25,18 +25,38 @@ class DeviceManagementScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          const Icon(LucideIcons.cpu, color: AppColors.primaryGreen),
+                          const Icon(
+                            LucideIcons.cpu,
+                            color: AppColors.primaryGreen,
+                          ),
                           const SizedBox(width: 12),
-                          Expanded(child: Text('ESP32-${greenhouse.id.toUpperCase()}', style: Theme.of(context).textTheme.titleLarge)),
+                          Expanded(
+                            child: Text(
+                              'ESP32-${greenhouse.id.toUpperCase()}',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
                           StatusBadge(
-                            label: greenhouse.deviceOnline ? 'Online' : 'Offline',
-                            severity: greenhouse.deviceOnline ? Severity.success : Severity.danger,
+                            label: greenhouse.deviceOnline
+                                ? 'Online'
+                                : 'Offline',
+                            severity: greenhouse.deviceOnline
+                                ? Severity.success
+                                : Severity.danger,
                           ),
                         ],
                       ),
                       const SizedBox(height: 14),
-                      Text('Assigned: ${greenhouse.name}', style: Theme.of(context).textTheme.bodyMedium),
-                      Text('Firmware: 1.4.2 • Sensor: EC, pH, DHT, Water Level', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText)),
+                      Text(
+                        'Assigned: ${greenhouse.name}',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                      Text(
+                        'Firmware: 1.4.2 - Sensor: EC, pH, DHT, Water Level',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.secondaryText,
+                        ),
+                      ),
                     ],
                   ),
                 ),

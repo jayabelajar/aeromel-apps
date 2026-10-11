@@ -25,12 +25,26 @@ class NotificationsScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Expanded(child: Text(alert.title, style: Theme.of(context).textTheme.titleLarge)),
-                          StatusBadge(label: alert.category, severity: alert.severity, icon: LucideIcons.bell),
+                          Expanded(
+                            child: Text(
+                              alert.title,
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                          StatusBadge(
+                            label: alert.category,
+                            severity: alert.severity,
+                            icon: LucideIcons.bell,
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8),
-                      Text(alert.description, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText)),
+                      Text(
+                        alert.description,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: AppColors.secondaryText,
+                        ),
+                      ),
                     ],
                   ),
                 ),

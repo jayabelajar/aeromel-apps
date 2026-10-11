@@ -24,13 +24,20 @@ class GreenhouseSelectionScreen extends ConsumerWidget {
               children: [
                 const Icon(LucideIcons.sprout, color: AppColors.primaryGreen),
                 const SizedBox(width: 10),
-                Expanded(child: Text('Pilih Greenhouse', style: Theme.of(context).textTheme.displaySmall)),
+                Expanded(
+                  child: Text(
+                    'Pilih Kebun',
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 8),
             Text(
-              'Pilih lokasi aktif untuk dashboard, AI insights, kontrol, dan histori.',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.secondaryText),
+              'Pilih lokasi aktif untuk sensor, insight, kontrol, dan histori.',
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(color: AppColors.secondaryText),
             ),
             const SizedBox(height: 24),
             ...demoGreenhouses.map(
@@ -40,7 +47,8 @@ class GreenhouseSelectionScreen extends ConsumerWidget {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(16),
                     onTap: () {
-                      ref.read(activeGreenhouseProvider.notifier).state = greenhouse;
+                      ref.read(activeGreenhouseProvider.notifier).state =
+                          greenhouse;
                       context.go('/home');
                     },
                     child: Column(
@@ -48,11 +56,22 @@ class GreenhouseSelectionScreen extends ConsumerWidget {
                       children: [
                         Row(
                           children: [
-                            Expanded(child: Text(greenhouse.name, style: Theme.of(context).textTheme.titleLarge)),
+                            Expanded(
+                              child: Text(
+                                greenhouse.name,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                            ),
                             StatusBadge(
-                              label: greenhouse.deviceOnline ? 'Online' : 'Offline',
-                              severity: greenhouse.deviceOnline ? Severity.success : Severity.danger,
-                              icon: greenhouse.deviceOnline ? LucideIcons.wifi : LucideIcons.wifiOff,
+                              label: greenhouse.deviceOnline
+                                  ? 'Online'
+                                  : 'Offline',
+                              severity: greenhouse.deviceOnline
+                                  ? Severity.success
+                                  : Severity.danger,
+                              icon: greenhouse.deviceOnline
+                                  ? LucideIcons.wifi
+                                  : LucideIcons.wifiOff,
                             ),
                           ],
                         ),
@@ -61,14 +80,23 @@ class GreenhouseSelectionScreen extends ConsumerWidget {
                           spacing: 8,
                           runSpacing: 8,
                           children: [
-                            StatusBadge(label: greenhouse.stage, severity: Severity.info, icon: LucideIcons.leaf),
-                            StatusBadge(label: greenhouse.variety, severity: Severity.success, icon: LucideIcons.apple),
+                            StatusBadge(
+                              label: greenhouse.stage,
+                              severity: Severity.info,
+                              icon: LucideIcons.leaf,
+                            ),
+                            StatusBadge(
+                              label: greenhouse.variety,
+                              severity: Severity.success,
+                              icon: LucideIcons.apple,
+                            ),
                           ],
                         ),
                         const SizedBox(height: 14),
                         Text(
-                          'Tanam ${DateFormat('d MMM yyyy').format(greenhouse.plantingDate)} • Last seen ${DateFormat('HH:mm').format(greenhouse.lastSeen)}',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText),
+                          'Tanam ${DateFormat('d MMM yyyy').format(greenhouse.plantingDate)} - Last seen ${DateFormat('HH:mm').format(greenhouse.lastSeen)}',
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: AppColors.secondaryText),
                         ),
                       ],
                     ),

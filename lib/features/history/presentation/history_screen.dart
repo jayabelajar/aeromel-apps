@@ -22,14 +22,25 @@ class HistoryScreen extends ConsumerWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text('History & Analytics', style: Theme.of(context).textTheme.displaySmall),
+            Text('Histori', style: Theme.of(context).textTheme.displaySmall),
             const SizedBox(height: 8),
-            Text('Tren sensor ditampilkan sesuai timestamp lokal pengguna.', style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.secondaryText)),
+            Text(
+              'Tren sensor ditampilkan sesuai timestamp lokal pengguna.',
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(color: AppColors.secondaryText),
+            ),
             const SizedBox(height: 18),
             SegmentedButton<String>(
-              segments: ranges.map((range) => ButtonSegment(value: range, label: Text(range))).toList(),
+              segments: ranges
+                  .map(
+                    (range) => ButtonSegment(value: range, label: Text(range)),
+                  )
+                  .toList(),
               selected: {selectedRange},
-              onSelectionChanged: (value) => ref.read(selectedHistoryRangeProvider.notifier).state = value.first,
+              onSelectionChanged: (value) =>
+                  ref.read(selectedHistoryRangeProvider.notifier).state =
+                      value.first,
             ),
             const SizedBox(height: 20),
             const SectionHeader(title: 'Ringkasan'),
@@ -41,32 +52,79 @@ class HistoryScreen extends ConsumerWidget {
                   spacing: 12,
                   runSpacing: 12,
                   children: [
-                    _SummaryCard(width: width, title: 'EC rata-rata', value: '2.08 mS/cm', icon: LucideIcons.activity),
-                    _SummaryCard(width: width, title: 'pH rata-rata', value: '6.08', icon: LucideIcons.flaskConical),
-                    _SummaryCard(width: width, title: 'Suhu maks', value: '30 °C', icon: LucideIcons.thermometer),
-                    _SummaryCard(width: width, title: 'Level min', value: '38%', icon: LucideIcons.gauge),
+                    _SummaryCard(
+                      width: width,
+                      title: 'EC rata-rata',
+                      value: '2.08 mS/cm',
+                      icon: LucideIcons.activity,
+                    ),
+                    _SummaryCard(
+                      width: width,
+                      title: 'pH rata-rata',
+                      value: '6.08',
+                      icon: LucideIcons.flaskConical,
+                    ),
+                    _SummaryCard(
+                      width: width,
+                      title: 'Suhu maks',
+                      value: '30 °C',
+                      icon: LucideIcons.thermometer,
+                    ),
+                    _SummaryCard(
+                      width: width,
+                      title: 'Level min',
+                      value: '38%',
+                      icon: LucideIcons.gauge,
+                    ),
                   ],
                 );
               },
             ),
             const SizedBox(height: 20),
-            _ChartCard(title: 'EC trend', unit: 'mS/cm', points: ecTrend, color: AppColors.primaryGreen),
+            _ChartCard(
+              title: 'EC trend',
+              unit: 'mS/cm',
+              points: ecTrend,
+              color: AppColors.primaryGreen,
+            ),
             const SizedBox(height: 14),
-            _ChartCard(title: 'pH trend', unit: '', points: phTrend, color: AppColors.info),
+            _ChartCard(
+              title: 'pH trend',
+              unit: '',
+              points: phTrend,
+              color: AppColors.info,
+            ),
             const SizedBox(height: 14),
-            _ChartCard(title: 'Temperature trend', unit: '°C', points: tempTrend, color: AppColors.warning),
+            _ChartCard(
+              title: 'Temperature trend',
+              unit: '°C',
+              points: tempTrend,
+              color: AppColors.warning,
+            ),
             const SizedBox(height: 20),
             const SectionHeader(title: 'Aktivitas aktuator'),
             const SizedBox(height: 12),
-            ...['Misting otomatis berjalan 18 detik', 'Konfigurasi interval diperbarui', 'Emergency stop diuji admin'].map(
+            ...[
+              'Misting otomatis berjalan 18 detik',
+              'Konfigurasi interval diperbarui',
+              'Emergency stop diuji admin',
+            ].map(
               (activity) => Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: AppCard(
                   child: Row(
                     children: [
-                      const Icon(LucideIcons.history, color: AppColors.primaryGreen),
+                      const Icon(
+                        LucideIcons.history,
+                        color: AppColors.primaryGreen,
+                      ),
                       const SizedBox(width: 12),
-                      Expanded(child: Text(activity, style: Theme.of(context).textTheme.titleMedium)),
+                      Expanded(
+                        child: Text(
+                          activity,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -80,7 +138,12 @@ class HistoryScreen extends ConsumerWidget {
 }
 
 class _ChartCard extends StatelessWidget {
-  const _ChartCard({required this.title, required this.unit, required this.points, required this.color});
+  const _ChartCard({
+    required this.title,
+    required this.unit,
+    required this.points,
+    required this.color,
+  });
 
   final String title;
   final String unit;
@@ -103,7 +166,12 @@ class _ChartCard extends StatelessWidget {
 }
 
 class _SummaryCard extends StatelessWidget {
-  const _SummaryCard({required this.width, required this.title, required this.value, required this.icon});
+  const _SummaryCard({
+    required this.width,
+    required this.title,
+    required this.value,
+    required this.icon,
+  });
 
   final double width;
   final String title;
@@ -121,9 +189,16 @@ class _SummaryCard extends StatelessWidget {
           children: [
             Icon(icon, color: AppColors.primaryGreen),
             const SizedBox(height: 10),
-            Text(title, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText)),
+            Text(
+              title,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText),
+            ),
             const SizedBox(height: 4),
-            FittedBox(child: Text(value, style: Theme.of(context).textTheme.titleLarge)),
+            FittedBox(
+              child: Text(value, style: Theme.of(context).textTheme.titleLarge),
+            ),
           ],
         ),
       ),

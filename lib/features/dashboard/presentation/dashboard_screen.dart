@@ -17,14 +17,16 @@ class DashboardScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final greenhouse = ref.watch(activeGreenhouseProvider) ?? demoGreenhouses.first;
+    final greenhouse =
+        ref.watch(activeGreenhouseProvider) ?? demoGreenhouses.first;
     final misting = ref.watch(mistingProvider);
     final latestRecommendation = demoRecommendations.first;
 
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: () async => Future<void>.delayed(const Duration(milliseconds: 500)),
+          onRefresh: () async =>
+              Future<void>.delayed(const Duration(milliseconds: 500)),
           child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
@@ -34,8 +36,17 @@ class DashboardScreen extends ConsumerWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Selamat sore', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText)),
-                        Text(greenhouse.name, style: Theme.of(context).textTheme.displaySmall),
+                        Text(
+                          'AeroMel',
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(color: AppColors.secondaryText),
+                        ),
+                        Text(
+                          greenhouse.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
                       ],
                     ),
                   ),
@@ -46,9 +57,9 @@ class DashboardScreen extends ConsumerWidget {
                   ),
                   const SizedBox(width: 8),
                   IconButton.filledTonal(
-                    tooltip: 'Pengaturan',
-                    onPressed: () => context.push('/settings'),
-                    icon: const Icon(LucideIcons.settings),
+                    tooltip: 'Profil',
+                    onPressed: () => context.go('/profile'),
+                    icon: const Icon(LucideIcons.user),
                   ),
                 ],
               ),
@@ -56,7 +67,11 @@ class DashboardScreen extends ConsumerWidget {
               if (!greenhouse.deviceOnline)
                 const Padding(
                   padding: EdgeInsets.only(bottom: 12),
-                  child: StatusBadge(label: 'Perangkat offline, data terbaru ditampilkan sebagai cache', severity: Severity.danger, icon: LucideIcons.wifiOff),
+                  child: StatusBadge(
+                    label: 'Offline - memakai data cache',
+                    severity: Severity.danger,
+                    icon: LucideIcons.wifiOff,
+                  ),
                 ),
               AppCard(
                 child: Column(
@@ -64,24 +79,41 @@ class DashboardScreen extends ConsumerWidget {
                   children: [
                     Row(
                       children: [
-                        Expanded(child: Text('Ringkasan greenhouse', style: Theme.of(context).textTheme.titleLarge)),
+                        Expanded(
+                          child: Text(
+                            'Kondisi kebun',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                        ),
                         StatusBadge(
                           label: greenhouse.deviceOnline ? 'Live' : 'Cached',
-                          severity: greenhouse.deviceOnline ? Severity.success : Severity.warning,
-                          icon: greenhouse.deviceOnline ? LucideIcons.radio : LucideIcons.clock,
+                          severity: greenhouse.deviceOnline
+                              ? Severity.success
+                              : Severity.warning,
+                          icon: greenhouse.deviceOnline
+                              ? LucideIcons.radio
+                              : LucideIcons.clock,
                         ),
                       ],
                     ),
                     const SizedBox(height: 14),
                     _InfoRow(label: 'Varietas', value: greenhouse.variety),
                     _InfoRow(label: 'Fase', value: greenhouse.stage),
-                    _InfoRow(label: 'Tanggal tanam', value: DateFormat('d MMMM yyyy').format(greenhouse.plantingDate)),
-                    _InfoRow(label: 'Update terakhir', value: DateFormat('HH:mm, d MMM').format(greenhouse.lastSeen)),
+                    _InfoRow(
+                      label: 'Tanam',
+                      value: DateFormat(
+                        'd MMM yyyy',
+                      ).format(greenhouse.plantingDate),
+                    ),
+                    _InfoRow(
+                      label: 'Update',
+                      value: DateFormat('HH:mm').format(greenhouse.lastSeen),
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              const SectionHeader(title: 'Sensor live'),
+              const SectionHeader(title: 'Sensor'),
               const SizedBox(height: 12),
               LayoutBuilder(
                 builder: (context, constraints) {
@@ -94,10 +126,14 @@ class DashboardScreen extends ConsumerWidget {
                       crossAxisCount: columns,
                       crossAxisSpacing: 12,
                       mainAxisSpacing: 12,
-                      childAspectRatio: constraints.maxWidth >= 720 ? 1.45 : .98,
+                      childAspectRatio: constraints.maxWidth >= 720
+                          ? 1.45
+                          : .98,
                     ),
                     itemBuilder: (context, index) => SensorCard(
-                      reading: greenhouse.deviceOnline ? demoSensors[index] : _stale(demoSensors[index]),
+                      reading: greenhouse.deviceOnline
+                          ? demoSensors[index]
+                          : _stale(demoSensors[index]),
                     ),
                   );
                 },
@@ -115,16 +151,29 @@ class DashboardScreen extends ConsumerWidget {
               AppCard(
                 child: Column(
                   children: [
-                    _InfoRow(label: 'Mode', value: misting.isAutomatic ? 'Otomatis • Fuzzy Mamdani' : 'Manual'),
-                    _InfoRow(label: 'Pompa', value: misting.pumpOn ? 'ON' : 'OFF'),
-                    _InfoRow(label: 'Durasi / interval', value: '${misting.durationSeconds} detik / ${misting.intervalMinutes} menit'),
-                    _InfoRow(label: 'Status perintah', value: _commandLabel(misting.commandState)),
+                    _InfoRow(
+                      label: 'Mode',
+                      value: misting.isAutomatic ? 'Otomatis' : 'Manual',
+                    ),
+                    _InfoRow(
+                      label: 'Pompa',
+                      value: misting.pumpOn ? 'ON' : 'OFF',
+                    ),
+                    _InfoRow(
+                      label: 'Jadwal',
+                      value:
+                          '${misting.durationSeconds}s / ${misting.intervalMinutes}m',
+                    ),
+                    _InfoRow(
+                      label: 'Command',
+                      value: _commandLabel(misting.commandState),
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
               SectionHeader(
-                title: 'Rekomendasi AI',
+                title: 'Insight nutrisi',
                 action: TextButton.icon(
                   onPressed: () => context.go('/insights'),
                   icon: const Icon(LucideIcons.arrowRight, size: 16),
@@ -136,37 +185,63 @@ class DashboardScreen extends ConsumerWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    StatusBadge(label: latestRecommendation.status, severity: Severity.warning, icon: LucideIcons.sparkles),
+                    StatusBadge(
+                      label: latestRecommendation.status,
+                      severity: Severity.warning,
+                      icon: LucideIcons.sparkles,
+                    ),
                     const SizedBox(height: 12),
-                    Text(latestRecommendation.action, style: Theme.of(context).textTheme.titleMedium),
+                    Text(
+                      'EC perlu sedikit dinaikkan.',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
                     const SizedBox(height: 8),
-                    Text(latestRecommendation.explanation, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText)),
+                    Text(
+                      'pH aman. Cek ulang setelah penyesuaian.',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppColors.secondaryText,
+                      ),
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              const SectionHeader(title: 'Peringatan'),
+              const SectionHeader(title: 'Alert'),
               const SizedBox(height: 12),
-              ...demoAlerts.map((alert) => Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: AppCard(
-                      child: Row(
-                        children: [
-                            Icon(alert.severity == Severity.warning ? LucideIcons.alertTriangle : LucideIcons.info, color: AppColors.warning),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(alert.title, style: Theme.of(context).textTheme.titleMedium),
-                                Text(alert.description, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText)),
-                              ],
-                            ),
+              ...demoAlerts.map(
+                (alert) => Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: AppCard(
+                    child: Row(
+                      children: [
+                        Icon(
+                          alert.severity == Severity.warning
+                              ? LucideIcons.alertTriangle
+                              : LucideIcons.info,
+                          color: AppColors.warning,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                alert.title,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              Text(
+                                alert.description,
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(color: AppColors.secondaryText),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -175,23 +250,23 @@ class DashboardScreen extends ConsumerWidget {
   }
 
   SensorReading _stale(SensorReading reading) => SensorReading(
-        label: reading.label,
-        value: reading.value,
-        unit: reading.unit,
-        status: reading.status,
-        icon: reading.icon,
-        stale: true,
-      );
+    label: reading.label,
+    value: reading.value,
+    unit: reading.unit,
+    status: reading.status,
+    icon: reading.icon,
+    stale: true,
+  );
 
   String _commandLabel(CommandState state) => switch (state) {
-        CommandState.pending => 'Pending',
-        CommandState.sent => 'Terkirim',
-        CommandState.acknowledged => 'Diakui perangkat',
-        CommandState.executed => 'Dieksekusi',
-        CommandState.failed => 'Gagal',
-        CommandState.timedOut => 'Timed out',
-        CommandState.rejected => 'Ditolak',
-      };
+    CommandState.pending => 'Pending',
+    CommandState.sent => 'Terkirim',
+    CommandState.acknowledged => 'Ack',
+    CommandState.executed => 'Selesai',
+    CommandState.failed => 'Gagal',
+    CommandState.timedOut => 'Timeout',
+    CommandState.rejected => 'Ditolak',
+  };
 }
 
 class _InfoRow extends StatelessWidget {
@@ -208,10 +283,23 @@ class _InfoRow extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 132,
-            child: Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText)),
+            width: 94,
+            child: Text(
+              label,
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText),
+            ),
           ),
-          Expanded(child: Text(value, textAlign: TextAlign.right, style: Theme.of(context).textTheme.titleMedium)),
+          Expanded(
+            child: Text(
+              value,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.right,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
         ],
       ),
     );

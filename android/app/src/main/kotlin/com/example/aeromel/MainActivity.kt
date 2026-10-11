@@ -1,4 +1,4 @@
-package com.example.melongrow_ai
+package com.example.aeromel
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -33,12 +33,17 @@ class MetricChart extends StatelessWidget {
           maxX: points.last.x,
           gridData: FlGridData(
             drawVerticalLine: false,
-            getDrawingHorizontalLine: (_) => const FlLine(color: AppColors.border, strokeWidth: 1),
+            getDrawingHorizontalLine: (_) =>
+                const FlLine(color: AppColors.border, strokeWidth: 1),
           ),
           borderData: FlBorderData(show: false),
           titlesData: FlTitlesData(
-            topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-            rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+            topTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            rightTitles: const AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
             leftTitles: AxisTitles(
               sideTitles: SideTitles(
                 reservedSize: 44,
@@ -53,7 +58,10 @@ class MetricChart extends StatelessWidget {
               sideTitles: SideTitles(
                 showTitles: true,
                 interval: 3,
-                getTitlesWidget: (value, meta) => Text('${value.toInt()}h', style: Theme.of(context).textTheme.labelSmall),
+                getTitlesWidget: (value, meta) => Text(
+                  '${value.toInt()}h',
+                  style: Theme.of(context).textTheme.labelSmall,
+                ),
               ),
             ),
           ),
@@ -64,13 +72,21 @@ class MetricChart extends StatelessWidget {
               barWidth: 3,
               isCurved: true,
               dotData: const FlDotData(show: false),
-              belowBarData: BarAreaData(show: true, color: color.withValues(alpha: .12)),
+              belowBarData: BarAreaData(
+                show: true,
+                color: color.withValues(alpha: .12),
+              ),
             ),
           ],
           lineTouchData: LineTouchData(
             touchTooltipData: LineTouchTooltipData(
               getTooltipItems: (items) => items
-                  .map((item) => LineTooltipItem('${item.y.toStringAsFixed(2)} $unit', const TextStyle(color: Colors.white)))
+                  .map(
+                    (item) => LineTooltipItem(
+                      '${item.y.toStringAsFixed(2)} $unit',
+                      const TextStyle(color: Colors.white),
+                    ),
+                  )
                   .toList(),
             ),
           ),

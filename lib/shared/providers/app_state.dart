@@ -2,9 +2,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/app_models.dart';
 
-final authProvider = StateNotifierProvider<AuthController, bool>((ref) => AuthController());
+final authProvider = StateNotifierProvider<AuthController, bool>(
+  (ref) => AuthController(),
+);
 final activeGreenhouseProvider = StateProvider<Greenhouse?>((ref) => null);
-final mistingProvider = StateNotifierProvider<MistingController, MistingStatus>((ref) => MistingController());
+final mistingProvider = StateNotifierProvider<MistingController, MistingStatus>(
+  (ref) => MistingController(),
+);
 final selectedHistoryRangeProvider = StateProvider<String>((ref) => 'Hari ini');
 
 class AuthController extends StateNotifier<bool> {

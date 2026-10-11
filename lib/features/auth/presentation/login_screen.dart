@@ -15,9 +15,10 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _email = TextEditingController(text: 'operator@melongrow.ai');
+  final _email = TextEditingController(text: 'operator@aeromel.id');
   final _password = TextEditingController(text: 'password123');
   bool _loading = false;
+  bool _obscurePassword = true;
   String? _error;
 
   @override
@@ -49,29 +50,51 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 28),
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 460),
+              constraints: const BoxConstraints(maxWidth: 430),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: 62,
-                    height: 62,
+                    width: 68,
+                    height: 68,
                     decoration: BoxDecoration(
-                      color: AppColors.primaryGreen,
-                      borderRadius: BorderRadius.circular(18),
+                      gradient: const LinearGradient(
+                        colors: [AppColors.primaryGreen, AppColors.info],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(22),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primaryGreen.withValues(alpha: .22),
+                          blurRadius: 22,
+                          offset: const Offset(0, 12),
+                        ),
+                      ],
                     ),
-                    child: const Icon(LucideIcons.sprout, color: Colors.white, size: 32),
+                    child: const Icon(
+                      LucideIcons.sprout,
+                      color: Colors.white,
+                      size: 31,
+                    ),
                   ),
-                  const SizedBox(height: 28),
-                  Text('MelonGrow AI', style: Theme.of(context).textTheme.displaySmall),
+                  const SizedBox(height: 22),
+                  Text(
+                    'AeroMel',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
                   const SizedBox(height: 8),
                   Text(
-                    'Masuk untuk memantau greenhouse aeroponik melon secara real-time.',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.secondaryText),
+                    'Monitoring aeroponik melon dalam satu layar.',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: AppColors.secondaryText,
+                    ),
                   ),
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 30),
                   Form(
                     key: _formKey,
                     child: Column(
@@ -79,30 +102,70 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         TextFormField(
                           controller: _email,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(prefixIcon: Icon(LucideIcons.mail), labelText: 'Email'),
-                          validator: (value) => value != null && value.contains('@') ? null : 'Email tidak valid',
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(LucideIcons.mail),
+                            labelText: 'Email',
+                          ),
+                          validator: (value) =>
+                              value != null && value.contains('@')
+                              ? null
+                              : 'Email tidak valid',
                         ),
                         const SizedBox(height: 14),
                         TextFormField(
                           controller: _password,
-                          obscureText: true,
-                          decoration: const InputDecoration(prefixIcon: Icon(LucideIcons.lock), labelText: 'Password'),
-                          validator: (value) => value != null && value.length >= 6 ? null : 'Minimal 6 karakter',
+                          obscureText: _obscurePassword,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(LucideIcons.lock),
+                            labelText: 'Password',
+                            suffixIcon: IconButton(
+                              tooltip: _obscurePassword
+                                  ? 'Tampilkan password'
+                                  : 'Sembunyikan password',
+                              onPressed: () => setState(
+                                () => _obscurePassword = !_obscurePassword,
+                              ),
+                              icon: Icon(
+                                _obscurePassword
+                                    ? LucideIcons.eye
+                                    : LucideIcons.eyeOff,
+                              ),
+                            ),
+                          ),
+                          validator: (value) =>
+                              value != null && value.length >= 6
+                              ? null
+                              : 'Minimal 6 karakter',
                         ),
                       ],
                     ),
                   ),
                   if (_error != null) ...[
                     const SizedBox(height: 14),
-                    Text(_error!, style: const TextStyle(color: AppColors.danger)),
+                    Text(
+                      _error!,
+                      style: const TextStyle(color: AppColors.danger),
+                    ),
                   ],
                   const SizedBox(height: 22),
                   ElevatedButton.icon(
                     onPressed: _loading ? null : _submit,
                     icon: _loading
-                        ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                        ? const SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: CircularProgressIndicator(strokeWidth: 2),
+                          )
                         : const Icon(LucideIcons.logIn),
                     label: const Text('Masuk'),
+                  ),
+                  const SizedBox(height: 14),
+                  Text(
+                    'Operator greenhouse',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                      color: AppColors.secondaryText,
+                    ),
                   ),
                 ],
               ),

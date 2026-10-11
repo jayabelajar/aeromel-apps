@@ -19,24 +19,47 @@ class NutrientsScreen extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Text('AI Nutrient Insights', style: Theme.of(context).textTheme.displaySmall),
+            Text(
+              'Insight Nutrisi',
+              style: Theme.of(context).textTheme.displaySmall,
+            ),
             const SizedBox(height: 8),
             Text(
-              'Analisis nutrisi berbasis sensor. Rekomendasi tidak menjalankan dosing otomatis pada MVP.',
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: AppColors.secondaryText),
+              'Saran nutrisi dari pembacaan sensor. Tidak menjalankan dosing otomatis.',
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(color: AppColors.secondaryText),
             ),
             const SizedBox(height: 18),
             AppCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const StatusBadge(label: 'Fase Fruiting', severity: Severity.info, icon: LucideIcons.leaf),
+                  const StatusBadge(
+                    label: 'Fase Fruiting',
+                    severity: Severity.info,
+                    icon: LucideIcons.leaf,
+                  ),
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      Expanded(child: _RangeTile(label: 'EC aktual', value: '2.15', unit: 'mS/cm', target: 'Target 2.20 - 2.60')),
+                      Expanded(
+                        child: _RangeTile(
+                          label: 'EC aktual',
+                          value: '2.15',
+                          unit: 'mS/cm',
+                          target: 'Target 2.20 - 2.60',
+                        ),
+                      ),
                       const SizedBox(width: 12),
-                      Expanded(child: _RangeTile(label: 'pH aktual', value: '6.1', unit: '', target: 'Target 5.8 - 6.5')),
+                      Expanded(
+                        child: _RangeTile(
+                          label: 'pH aktual',
+                          value: '6.1',
+                          unit: '',
+                          target: 'Target 5.8 - 6.5',
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -49,18 +72,42 @@ class NutrientsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  StatusBadge(label: current.status, severity: Severity.warning, icon: LucideIcons.sparkles),
+                  StatusBadge(
+                    label: current.status,
+                    severity: Severity.warning,
+                    icon: LucideIcons.sparkles,
+                  ),
                   const SizedBox(height: 14),
-                  Text(current.action, style: Theme.of(context).textTheme.titleLarge),
+                  Text(
+                    current.action,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
                   const SizedBox(height: 10),
-                  Text(current.explanation, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText)),
+                  Text(
+                    current.explanation,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.secondaryText,
+                    ),
+                  ),
                   const SizedBox(height: 14),
                   Wrap(
                     spacing: 8,
                     runSpacing: 8,
                     children: [
-                      StatusBadge(label: current.engineVersion, severity: Severity.info, icon: LucideIcons.cpu),
-                      StatusBadge(label: DateFormat('HH:mm, d MMM').format(current.createdAt), severity: Severity.success, icon: LucideIcons.clock),
+                      StatusBadge(
+                        label: current.engineVersion,
+                        severity: Severity.info,
+                        icon: LucideIcons.cpu,
+                      ),
+                      StatusBadge(
+                        label: DateFormat(
+                          'HH:mm, d MMM',
+                        ).format(current.createdAt),
+                        severity: Severity.success,
+                        icon: LucideIcons.clock,
+                      ),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -78,7 +125,7 @@ class NutrientsScreen extends StatelessWidget {
                         child: ElevatedButton.icon(
                           onPressed: () {},
                           icon: const Icon(LucideIcons.check),
-                          label: const Text('Acknowledge'),
+                          label: const Text('Tandai'),
                         ),
                       ),
                     ],
@@ -95,14 +142,30 @@ class NutrientsScreen extends StatelessWidget {
                 child: AppCard(
                   child: Row(
                     children: [
-                      Icon(item.acknowledged ? LucideIcons.checkCircle2 : LucideIcons.circleDashed, color: item.acknowledged ? AppColors.success : AppColors.warning),
+                      Icon(
+                        item.acknowledged
+                            ? LucideIcons.checkCircle2
+                            : LucideIcons.circleDashed,
+                        color: item.acknowledged
+                            ? AppColors.success
+                            : AppColors.warning,
+                      ),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(item.status, style: Theme.of(context).textTheme.titleMedium),
-                            Text(item.action, maxLines: 2, overflow: TextOverflow.ellipsis, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppColors.secondaryText)),
+                            Text(
+                              item.status,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(
+                              item.action,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: AppColors.secondaryText),
+                            ),
                           ],
                         ),
                       ),
@@ -119,7 +182,12 @@ class NutrientsScreen extends StatelessWidget {
 }
 
 class _RangeTile extends StatelessWidget {
-  const _RangeTile({required this.label, required this.value, required this.unit, required this.target});
+  const _RangeTile({
+    required this.label,
+    required this.value,
+    required this.unit,
+    required this.target,
+  });
 
   final String label;
   final String value;
@@ -130,13 +198,26 @@ class _RangeTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(color: AppColors.lightGreen, borderRadius: BorderRadius.circular(14)),
+      decoration: BoxDecoration(
+        color: AppColors.lightGreen,
+        borderRadius: BorderRadius.circular(14),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label, style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.secondaryText)),
+          Text(
+            label,
+            style: Theme.of(
+              context,
+            ).textTheme.labelMedium?.copyWith(color: AppColors.secondaryText),
+          ),
           const SizedBox(height: 6),
-          FittedBox(child: Text('$value $unit', style: Theme.of(context).textTheme.titleLarge)),
+          FittedBox(
+            child: Text(
+              '$value $unit',
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ),
           const SizedBox(height: 6),
           Text(target, style: Theme.of(context).textTheme.labelMedium),
         ],

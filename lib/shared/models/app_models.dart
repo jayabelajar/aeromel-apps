@@ -3,7 +3,15 @@ import 'package:lucide_icons/lucide_icons.dart';
 
 enum Severity { success, warning, danger, info }
 
-enum CommandState { pending, sent, acknowledged, executed, failed, timedOut, rejected }
+enum CommandState {
+  pending,
+  sent,
+  acknowledged,
+  executed,
+  failed,
+  timedOut,
+  rejected,
+}
 
 class Greenhouse {
   const Greenhouse({
@@ -105,12 +113,48 @@ class MetricPoint {
 }
 
 const demoSensors = [
-  SensorReading(label: 'EC', value: '2.15', unit: 'mS/cm', status: Severity.success, icon: LucideIcons.activity),
-  SensorReading(label: 'pH', value: '6.1', unit: '', status: Severity.success, icon: LucideIcons.flaskConical),
-  SensorReading(label: 'Suhu udara', value: '28.4', unit: '°C', status: Severity.warning, icon: LucideIcons.thermometer),
-  SensorReading(label: 'Kelembapan', value: '74', unit: '%', status: Severity.success, icon: LucideIcons.droplets),
-  SensorReading(label: 'Suhu air', value: '25.2', unit: '°C', status: Severity.success, icon: LucideIcons.waves),
-  SensorReading(label: 'Level air', value: '38', unit: '%', status: Severity.warning, icon: LucideIcons.gauge),
+  SensorReading(
+    label: 'EC',
+    value: '2.15',
+    unit: 'mS/cm',
+    status: Severity.success,
+    icon: LucideIcons.activity,
+  ),
+  SensorReading(
+    label: 'pH',
+    value: '6.1',
+    unit: '',
+    status: Severity.success,
+    icon: LucideIcons.flaskConical,
+  ),
+  SensorReading(
+    label: 'Suhu udara',
+    value: '28.4',
+    unit: '°C',
+    status: Severity.warning,
+    icon: LucideIcons.thermometer,
+  ),
+  SensorReading(
+    label: 'Kelembapan',
+    value: '74',
+    unit: '%',
+    status: Severity.success,
+    icon: LucideIcons.droplets,
+  ),
+  SensorReading(
+    label: 'Suhu air',
+    value: '25.2',
+    unit: '°C',
+    status: Severity.success,
+    icon: LucideIcons.waves,
+  ),
+  SensorReading(
+    label: 'Level air',
+    value: '38',
+    unit: '%',
+    status: Severity.warning,
+    icon: LucideIcons.gauge,
+  ),
 ];
 
 final demoGreenhouses = [
@@ -148,7 +192,8 @@ final demoRecommendations = [
     id: 'rec-91',
     status: 'Nutrisi sedikit rendah',
     action: 'Naikkan EC target ke 2.25 mS/cm dan evaluasi pH dalam 2 jam.',
-    explanation: 'EC aktual berada di bawah rentang target fase fruiting, sementara pH masih stabil. Rekomendasi ini hanya panduan operator, bukan perintah dosing otomatis.',
+    explanation:
+        'EC aktual berada di bawah rentang target fase fruiting, sementara pH masih stabil. Rekomendasi ini hanya panduan operator, bukan perintah dosing otomatis.',
     createdAt: DateTime(2026, 10, 11, 16, 45),
     acknowledged: false,
     engineVersion: 'Rule Engine 1.0',
@@ -181,6 +226,15 @@ final demoAlerts = [
   ),
 ];
 
-final ecTrend = List.generate(12, (i) => MetricPoint(i.toDouble(), 1.9 + (i % 5) * .08));
-final phTrend = List.generate(12, (i) => MetricPoint(i.toDouble(), 5.8 + (i % 4) * .12));
-final tempTrend = List.generate(12, (i) => MetricPoint(i.toDouble(), 27 + (i % 6) * .6));
+final ecTrend = List.generate(
+  12,
+  (i) => MetricPoint(i.toDouble(), 1.9 + (i % 5) * .08),
+);
+final phTrend = List.generate(
+  12,
+  (i) => MetricPoint(i.toDouble(), 5.8 + (i % 4) * .12),
+);
+final tempTrend = List.generate(
+  12,
+  (i) => MetricPoint(i.toDouble(), 27 + (i % 6) * .6),
+);
