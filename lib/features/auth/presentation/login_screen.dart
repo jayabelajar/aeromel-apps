@@ -36,7 +36,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
     try {
       await ref.read(authProvider.notifier).login(_email.text, _password.text);
-      if (mounted) context.go('/greenhouses');
+      if (mounted) context.go('/home');
     } catch (error) {
       setState(() => _error = error.toString().replaceFirst('Exception: ', ''));
     } finally {
@@ -61,7 +61,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     height: 68,
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [AppColors.primaryGreen, AppColors.info],
+                        colors: [AppColors.darkGreen, AppColors.leafGreen],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -158,14 +158,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           )
                         : const Icon(LucideIcons.logIn),
                     label: const Text('Masuk'),
-                  ),
-                  const SizedBox(height: 14),
-                  Text(
-                    'Operator greenhouse',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: AppColors.secondaryText,
-                    ),
                   ),
                 ],
               ),

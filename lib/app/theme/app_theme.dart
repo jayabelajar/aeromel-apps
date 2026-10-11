@@ -20,6 +20,25 @@ abstract final class AppTheme {
         surface: AppColors.surface,
         error: AppColors.danger,
       ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: AppColors.surface,
+        indicatorColor: AppColors.mintGreen,
+        elevation: 8,
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => textTheme.labelMedium?.copyWith(
+            color: states.contains(WidgetState.selected)
+                ? AppColors.darkGreen
+                : AppColors.secondaryText,
+          ),
+        ),
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            color: states.contains(WidgetState.selected)
+                ? AppColors.darkGreen
+                : AppColors.secondaryText,
+          ),
+        ),
+      ),
       textTheme: textTheme.copyWith(
         displaySmall: textTheme.displaySmall?.copyWith(
           fontSize: 28,

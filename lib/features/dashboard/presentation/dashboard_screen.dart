@@ -18,15 +18,23 @@ class DashboardScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final greenhouse =
-        ref.watch(activeGreenhouseProvider) ?? demoGreenhouses.first;
+        ref.watch(greenhouseProvider).value ?? demoGreenhouses.first;
+    final sensors = ref.watch(sensorsProvider).value ?? demoSensors;
+    final recommendations =
+        ref.watch(recommendationsProvider).value ?? demoRecommendations;
+    final alerts = ref.watch(alertsProvider).value ?? demoAlerts;
     final misting = ref.watch(mistingProvider);
-    final latestRecommendation = demoRecommendations.first;
+    final latestRecommendation = recommendations.first;
 
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: () async =>
-              Future<void>.delayed(const Duration(milliseconds: 500)),
+          onRefresh: () async {
+            ref.invalidate(greenhouseProvider);
+            ref.invalidate(sensorsProvider);
+            ref.invalidate(recommendationsProvider);
+            ref.invalidate(alertsProvider);
+          },
           child: ListView(
             padding: const EdgeInsets.all(16),
             children: [
@@ -121,7 +129,7 @@ class DashboardScreen extends ConsumerWidget {
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: demoSensors.length,
+                    itemCount: sensors.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: columns,
                       crossAxisSpacing: 12,
@@ -132,8 +140,8 @@ class DashboardScreen extends ConsumerWidget {
                     ),
                     itemBuilder: (context, index) => SensorCard(
                       reading: greenhouse.deviceOnline
-                          ? demoSensors[index]
-                          : _stale(demoSensors[index]),
+                          ? sensors[index]
+                          : _stale(sensors[index]),
                     ),
                   );
                 },
@@ -208,7 +216,7 @@ class DashboardScreen extends ConsumerWidget {
               const SizedBox(height: 20),
               const SectionHeader(title: 'Alert'),
               const SizedBox(height: 12),
-              ...demoAlerts.map(
+              ...alerts.map(
                 (alert) => Padding(
                   padding: const EdgeInsets.only(bottom: 10),
                   child: AppCard(

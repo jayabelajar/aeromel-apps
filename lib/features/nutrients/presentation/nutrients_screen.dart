@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -7,13 +8,16 @@ import '../../../core/widgets/app_card.dart';
 import '../../../core/widgets/section_header.dart';
 import '../../../core/widgets/status_badge.dart';
 import '../../../shared/models/app_models.dart';
+import '../../../shared/providers/app_state.dart';
 
-class NutrientsScreen extends StatelessWidget {
+class NutrientsScreen extends ConsumerWidget {
   const NutrientsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final current = demoRecommendations.first;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final recommendations =
+        ref.watch(recommendationsProvider).value ?? demoRecommendations;
+    final current = recommendations.first;
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -136,7 +140,7 @@ class NutrientsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             const SectionHeader(title: 'Histori rekomendasi'),
             const SizedBox(height: 12),
-            ...demoRecommendations.map(
+            ...recommendations.map(
               (item) => Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: AppCard(

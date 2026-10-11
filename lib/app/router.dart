@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 import '../features/auth/presentation/login_screen.dart';
 import '../features/dashboard/presentation/dashboard_screen.dart';
-import '../features/greenhouse/presentation/greenhouse_selection_screen.dart';
 import '../features/nutrients/presentation/nutrients_screen.dart';
 import '../features/misting/presentation/misting_screen.dart';
 import '../features/history/presentation/history_screen.dart';
@@ -16,10 +15,7 @@ final appRouter = GoRouter(
   initialLocation: '/login',
   routes: [
     GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
-    GoRoute(
-      path: '/greenhouses',
-      builder: (context, state) => const GreenhouseSelectionScreen(),
-    ),
+    GoRoute(path: '/greenhouses', redirect: (context, state) => '/home'),
     StatefulShellRoute.indexedStack(
       builder: (context, state, shell) => MainShell(shell: shell),
       branches: [

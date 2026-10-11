@@ -160,21 +160,12 @@ const demoSensors = [
 final demoGreenhouses = [
   Greenhouse(
     id: 'gh-01',
-    name: 'Greenhouse A1',
+    name: 'Greenhouse Utama',
     variety: 'Golden Melon',
     stage: 'Fruiting',
     plantingDate: DateTime(2026, 8, 22),
     deviceOnline: true,
     lastSeen: DateTime(2026, 10, 11, 16, 58),
-  ),
-  Greenhouse(
-    id: 'gh-02',
-    name: 'Greenhouse B2',
-    variety: 'Honey Globe',
-    stage: 'Vegetative',
-    plantingDate: DateTime(2026, 9, 9),
-    deviceOnline: false,
-    lastSeen: DateTime(2026, 10, 11, 13, 12),
   ),
 ];
 

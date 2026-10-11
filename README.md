@@ -5,13 +5,13 @@ AeroMel is a Flutter mobile application for monitoring and controlling melon aer
 ## Features
 
 - Responsive authentication screen with password visibility toggle.
-- Greenhouse selection with connectivity and growth-stage status.
+- Single-greenhouse dashboard with connectivity and growth-stage status.
 - Real-time-ready dashboard for EC, pH, air temperature, humidity, water temperature, and water level.
 - Nutrient insight screen with recommendation details and acknowledgement flow.
 - Smart misting control with automatic/manual modes, confirmation dialog, command state, and emergency stop.
 - History and analytics view with metric summaries and charts.
 - Alert center, device overview, and profile/settings screen.
-- Floating 5-item bottom navigation optimized for mobile layouts.
+- Fixed 5-item bottom navigation optimized for mobile layouts.
 
 ## Tech Stack
 
@@ -97,4 +97,4 @@ flutter build web --no-wasm-dry-run
 
 ## Project Status
 
-The current version is an MVP UI implementation with demo data and integration-ready network foundations. API, authentication persistence, live WebSocket telemetry, and production command acknowledgement can be connected through the existing Dio, secure storage, and WebSocket layers.
+The current version is an MVP UI implementation with API-first data providers and demo fallbacks. Set `AEROMEL_API_BASE_URL` with `--dart-define` to connect real endpoints; when the API is unavailable, the app keeps running with demo login and dummy telemetry.

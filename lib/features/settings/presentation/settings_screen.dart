@@ -36,7 +36,7 @@ class SettingsScreen extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Operator Greenhouse',
+                        'Admin AeroMel',
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       Text(
@@ -66,12 +66,6 @@ class SettingsScreen extends ConsumerWidget {
             icon: LucideIcons.ruler,
             title: 'Unit preferensi',
             subtitle: 'Metric',
-          ),
-          _SettingTile(
-            icon: LucideIcons.warehouse,
-            title: 'Ganti greenhouse',
-            subtitle: 'Pilih greenhouse aktif',
-            onTap: () => context.go('/greenhouses'),
           ),
           _SettingTile(
             icon: LucideIcons.cpu,
